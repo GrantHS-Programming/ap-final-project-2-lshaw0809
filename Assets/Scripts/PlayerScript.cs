@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Awake()
     {
-        RB = getComponent<Rigidbody2D>();
+        RB =  GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -20,9 +20,21 @@ public class PlayerScript : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if(isGrounded = true)
+            if (isGrounded = true)
             {
+                RB.AddForce(Vector2.up * JumpForce);
+                isGrounded = false;
+            }
+        }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            if(isGrounded == false)
+            {
+                isGrounded = true;
             }
         }
     }
