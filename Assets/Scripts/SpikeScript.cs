@@ -13,7 +13,12 @@ public class SpikeScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("nextLine"))
         {
-            spikeGenerator.generateSpike();
+            spikeGenerator.GenerateNextSpikeWithGap();
+        }
+
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            Destroy(this.gameObject);
         }
     }
 }
