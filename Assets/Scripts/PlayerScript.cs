@@ -10,7 +10,8 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     bool isGrounded = false;
     bool isAlive = true;
-    bool dble = true;
+    bool dble = false;
+    bool keyUp = false;
 
     Rigidbody2D RB;
 
@@ -25,29 +26,33 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAlive == true)
+        if (isGrounded == true)
+        {
+            dble = true;
+            keyUp = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded == true)
             {
-                dble = true;
+                RB.AddForce(Vector2.up * JumpForce);
+                isGrounded = false;
             }
+        }
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (isGrounded == true)
-                {
-                    RB.AddForce(Vector2.up * JumpForce);
-                    isGrounded = false;
-                }
-            }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            keyUp = true;
+        }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (isGrounded == false && dble == true && keyUp == true)
             {
-                if (isGrounded == false && dble == true)
-                {
-                    RB.AddForce(Vector2.up * JumpForce);
-                    dble = false;
-                }
+                RB.AddForce(Vector2.up * JumpForce);
+                dble = false;
+                keyUp = false;
             }
         }
         
